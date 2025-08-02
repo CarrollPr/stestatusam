@@ -23,6 +23,25 @@
     }
     footer { border-top: 1px solid rgba(255,255,255,0.05); border-bottom: none; }
     header h1 { font-size:2rem; }
+    .counter {
+      max-width:400px;
+      margin:1.5rem auto;
+      background: rgba(255,255,255,0.07);
+      border-radius: 16px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      padding:0.8rem 1.2rem;
+      text-align:center;
+      font-size:1.1rem;
+      color:#fff;
+      font-weight:600;
+      letter-spacing:0.5px;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity:0;transform:translateY(-5px);}
+      to {opacity:1;transform:translateY(0);}
+    }
     main {
       flex:1;
       padding:1.5rem;
@@ -101,6 +120,19 @@
     @media (max-width:600px){
       header h1{font-size:1.6rem;}
       .info h2{font-size:1rem;}
+      .about {
+        margin:1rem;
+        padding:1rem;
+        font-size:0.9rem;
+        border-radius: 12px;
+        line-height:1.4;
+      }
+      .counter {
+        margin:1rem;
+        font-size:1rem;
+        padding:0.6rem 1rem;
+        border-radius: 12px;
+      }
     }
   </style>
 </head>
@@ -108,6 +140,7 @@
   <header>
     <h1>Steam Freebies Hub</h1>
   </header>
+  <div class="counter" id="counter">Найдено: 0 акций</div>
   <main id="games-container">
     <p style="text-align:center;">Загрузка...</p>
   </main>
@@ -120,6 +153,7 @@
   <script>
     async function loadGiveaways(){
       const container=document.getElementById('games-container');
+      const counter=document.getElementById('counter');
       container.innerHTML='<p style="text-align:center;">Загрузка...</p>';
       try{
         const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.gamerpower.com/api/giveaways?platform=steam');
@@ -128,6 +162,7 @@
         const wrapped=await res.json();
         const data=JSON.parse(wrapped.contents);
         container.innerHTML='';
+        counter.textContent=`Найдено: ${data.length} акций`;
         data.forEach(g=>{
           const end = g.end_date && g.end_date!=='N/A'
             ? new Date(g.end_date).toLocaleDateString('ru')
@@ -145,6 +180,7 @@
         });
       }catch(e){
         container.innerHTML='<p style="text-align:center;color:#f55;">Ошибка загрузки, попробуй позже</p>';
+        counter.textContent='Ошибка загрузки';
         console.error('Fetch error:', e);
       }
     }
