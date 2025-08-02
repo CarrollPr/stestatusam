@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free Steam Giveaways — Жидкое Стекло</title>
+  <style>
+    *,*::before,*::after { box-sizing:border-box; margin:0;padding:0; }
+    body { 
+      font-family: 'Segoe UI', sans-serif; 
+      background: #1f1f1f; 
+      color: #eee; 
+      display:flex;flex-direction:column;min-height:100vh;
+      background-image: linear-gradient(135deg, rgba(20,30,48,0.8), rgba(36,59,85,0.8)), url(''); 
+    }
+    header, footer {
+      text-align:center;
+      padding:1rem;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+    header h1 { font-size:2rem; }
+    main {
+      flex:1;
+      padding:1rem;
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+      gap:1rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+    }
+    .card img {
+      width:100%; height:160px;
+      object-fit:cover;
+      filter: brightness(0.9);
+    }
+    .info {
+      padding:1rem;
+      display:flex;flex-direction:column;flex:1;
+    }
+    .info h2 {
+      font-size:1.2rem; margin-bottom:0.5rem;
+    }
+    .info p {
+      font-size:0.95rem; margin-bottom:1rem; color:#ccc;
+    }
+    .info a {
+      margin-top:auto;
+      text-decoration:none;
+      background: linear-gradient(135deg,#00c6ff,#0072ff);
+      color:#fff;
+      padding:0.6rem;
+      text-align:center;
+      border-radius:8px;
+      font-weight:600;
+      transition: background 0.3s;
+    }
+    .info a:hover {
+      background: linear-gradient(135deg,#0072ff,#00c6ff);
+    }
+    footer { font-size:0.85rem; color:#aaa; }
+    @media (max-width:600px){
+      header h1{font-size:1.6rem;}
+      .info h2{font-size:1rem;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Бесплатные акции Steam</h1>
+  </header>
+  <main id="games-container">
+    <p style="text-align:center;">Загрузка...</p>
+  </main>
+  <footer>by Aik Carroll</footer>
+  <script>
+    async function loadGiveaways(){
+      const container=document.getElementById('games-container');
+      container.innerHTML='<p style="text-align:center;">Загрузка...</p>';
+      try{
+        const res=await fetch('https://www.gamerpower.com/api/giveaways?platform=steam');
+        if(!res.ok) throw new Error(res.status);
+        const data=await res.json();
+        container.innerHTML='';
+        data.forEach(g=>{
+          const end = g.end_date && g.end_date!=='N/A'
+            ? new Date(g.end_date).toLocaleDateString('ru')
+            : 'Без срока';
+          const card=document.createElement('div');
+          card.className='card';
+          card.innerHTML=`
+            <img src="${g.image}" alt="${g.title}">
+            <div class="info">
+              <h2>${g.title}</h2>
+              <p>До: ${end}</p>
+              <a href="${g.open_giveaway_url}" target="_blank">Получить</a>
+            </div>`;
+          container.appendChild(card);
+        });
+      }catch(e){
+        container.innerHTML='<p style="text-align:center;color:#f55;">Ошибка загрузки, попробуй позже</p>';
+        console.error('Fetch error:', e);
+      }
+    }
+    loadGiveaways();
+    setInterval(loadGiveaways, 300000); // обновление каждые 5 минут
+  </script>
+</body>
+</html>
