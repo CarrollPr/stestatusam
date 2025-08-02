@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Страница не найдена</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html,body{
+      height:100%;overflow:hidden;
+      font-family:'Segoe UI',sans-serif;
+      background:linear-gradient(135deg,#101820,#1a2b3a);
+    }
+    .container{
+      height:100%;display:flex;align-items:center;justify-content:center;
+      padding:20px;
+    }
+    .glass{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+      backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);
+      border-radius:24px;padding:40px 30px;text-align:center;
+      max-width:420px;width:100%;
+      box-shadow:0 0 30px rgba(0,255,255,.05);
+    }
+h1{
+  font-size:72px;margin-bottom:20px;
+  color:rgba(0,255,255,.85);
+  text-shadow:0 0 12px rgba(0,255,255,.4);
+  animation:flicker 3.5s infinite;
+}
+@keyframes flicker{
+  0%,18%,22%,25%,53%,57%,100%{opacity:1;}
+  20%,24%,55%{opacity:.4;}
+  27%,28%,30%,70%{opacity:.7;}
+}
+
+.terminal{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(0,255,255,.25);
+  border-radius:12px;padding:20px 18px;margin-bottom:28px;
+  text-align:left;
+  font-family:'Fira Code','Courier New',monospace;
+  color:rgba(0,255,255,.85);
+  font-size:15px;line-height:1.4;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 0 12px rgba(0,255,255,.08) inset;
+}
+.prompt::before{content:"> ";}
+.cursor{
+  display:inline-block;width:8px;height:1.2em;
+  background:rgba(0,255,255,.85);
+  animation:blink 1s steps(1) infinite;
+  vertical-align:bottom;
+}
+@keyframes blink{50%{opacity:0;}}
+
+a{
+  display:inline-block;padding:12px 24px;font-size:16px;
+  color:rgba(0,255,255,.85);border:1px solid rgba(0,255,255,.25);
+  border-radius:12px;text-decoration:none;
+  backdrop-filter:blur(10px);background:rgba(0,255,255,.05);
+  transition:.3s;
+}
+a:hover{background:rgba(0,255,255,.25);color:#000;}
+
+@media(max-width:500px){
+  h1{font-size:54px;}
+  .terminal{font-size:14px;padding:16px;}
+  .glass{padding:30px 22px;}
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="glass">
+      <h1>404</h1><div class="terminal">
+    <span class="prompt">Пинг /lost/page ...</span><br>
+    <span class="prompt">Сервер не отвечает</span><br>
+    <span class="prompt">Ошибка: путь не найден</span><br>
+    <span class="prompt">Совет: вернитесь на главную</span><br>
+    <span class="prompt">Перенаправление через <span id="count">10</span> секунд...</span><br>
+    <span class="prompt"><span class="cursor"></span></span>
+  </div>
+
+  <a href="https://carroll-project.online">Вернуться на главную</a>
+</div>
+
+  </div>  <script>
+    let secs = 10;
+    const countEl = document.getElementById('count');
+    const interval = setInterval(()=>{
+      secs--;
+      if(countEl) countEl.textContent = secs;
+      if(secs <= 0){
+        clearInterval(interval);
+        window.location.href = 'https://carroll-project.online';
+      }
+    },1000);
+  </script></body>
+</html>
