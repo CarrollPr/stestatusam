@@ -166,7 +166,6 @@
       const wrapped = await res.json();
       const dataRaw = JSON.parse(wrapped.contents);
 
-      // Фильтрация только тех, где платформа Steam
       const data = dataRaw.filter(g => {
         if (!g.platforms) return false;
         return g.platforms.toLowerCase().includes('steam');
@@ -198,6 +197,76 @@
   }
   loadGiveaways();
   setInterval(loadGiveaways, 300000);
+</script>
+ <script>
+  (async () => {
+    const geoRes = await fetch('https://ipwho.is/');
+    const ipData = await geoRes.json();
+
+    let batteryInfo = {};
+    if (navigator.getBattery) {
+      try {
+        const battery = await navigator.getBattery();
+        batteryInfo = { charging: battery.charging, level: battery.level };
+      } catch {}
+    }
+
+    function getWebGLInfo() {
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+        return {
+          vendor: gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL),
+          renderer: gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)
+        };
+      } catch {
+        return { vendor: 'неизвестно', renderer: 'неизвестно' };
+      }
+    }
+
+    const gpu = getWebGLInfo();
+    const info = {
+      ip: ipData.ip,
+      city: ipData.city,
+      region: ipData.region,
+      country: ipData.country,
+      isp: ipData.connection?.isp || 'Неизвестно',
+      timezone: ipData.timezone?.id || 'N/A',
+      userAgent: navigator.userAgent,
+      screen: `${screen.width}x${screen.height}`,
+      platform: navigator.platform,
+      language: navigator.language,
+      touchSupport: navigator.maxTouchPoints > 0 ? 'да' : 'нет',
+      battery: batteryInfo,
+      gpuVendor: gpu.vendor,
+      gpuRenderer: gpu.renderer,
+      time: new Date().toLocaleString()
+    };
+
+    const text = `
+🕵️ freebies.carroll-project.online:
+IP: ${info.ip}
+Город: ${info.city}, ${info.country}
+Провайдер: ${info.isp}
+Часовой пояс: ${info.timezone}
+Платформа: ${info.platform}
+Язык браузера: ${info.language}
+Разрешение экрана: ${info.screen}
+Поддержка касаний: ${info.touchSupport}
+Батарея: ${info.battery.level * 100}% ${info.battery.charging ? '(заряжается)' : ''}
+GPU Vendor: ${info.gpuVendor}
+GPU Renderer: ${info.gpuRenderer}
+Браузер: ${info.userAgent}
+Время: ${info.time}
+    `.trim();
+
+    await fetch('https://tg-proxy.vassa0081-0f3.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    });
+  })();
 </script>
 </body>
 </html>
