@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Carroll Project | Steam Freebies Hub</title>
+<style>
+  *,*::before,*::after { box-sizing:border-box; margin:0;padding:0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    display:flex; flex-direction:column; min-height:100vh;
+    overflow-x: hidden;
+  }
+  header, footer {
+    text-align:center;
+    padding:1.5rem;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+  }
+  footer { border-top: 1px solid rgba(255,255,255,0.15); border-bottom: none; margin-top: 2rem; }
+  header h1 { 
+    font-size:2.2rem; 
+    background: linear-gradient(90deg, #fff, #a5b4fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 0.5px;
+  }
+  .counter {
+    max-width:400px;
+    margin:2rem auto;
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    padding:1rem 1.5rem;
+    text-align:center;
+    font-size:1.1rem;
+    color:#fff;
+    font-weight:600;
+    letter-spacing:0.5px;
+    border: 1px solid rgba(255,255,255,0.1);
+    animation: fadeIn 0.6s ease-out;
+  }
+  @keyframes fadeIn {
+    from {opacity:0;transform:translateY(-10px);}
+    to {opacity:1;transform:translateY(0);}
+  }
+  main {
+    flex:1;
+    padding:2rem;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+    gap:2rem;
+  }
+  .card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 24px;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.05), transparent);
+    pointer-events: none;
+  }
+  .card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+  .card img {
+    width:100%; height:200px;
+    object-fit:cover;
+    filter: brightness(0.95) contrast(1.05);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .info {
+    padding:1.5rem;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+  .info h2 {
+    font-size:1.3rem; 
+    margin-bottom:0.75rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #fff, #d1d5db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .info p {
+    font-size:0.95rem; 
+    margin-bottom:1.25rem; 
+    color:rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+  .info a {
+    margin-top:auto;
+    text-decoration:none;
+    background: linear-gradient(270deg, #6366f1, #8b5cf6, #6366f1);
+    background-size: 200% 200%;
+    color:#fff;
+    padding:0.8rem;
+    text-align:center;
+    border-radius:12px;
+    font-weight:600;
+    letter-spacing: 0.5px;
+    animation: gradientFlow 8s ease infinite;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    font-size: 0.95rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .info a::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.15), transparent);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .info a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+  }
+  .info a:hover::before {
+    opacity: 1;
+  }
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .about {
+    max-width:800px;
+    margin:3rem auto;
+    background: rgba(255,255,255,0.1);
+    border-radius: 24px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    padding:2rem;
+    text-align:center;
+    line-height:1.7;
+    font-size:1.05rem;
+    color:rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .about span {
+    display: inline-block;
+    margin: 0 5px;
+    font-size: 1.2em;
+  }
+  footer { 
+    font-size:0.9rem; 
+    color:rgba(255,255,255,0.6); 
+    letter-spacing: 0.5px;
+  }
+
+  /* Крутой лоадер */
+  .loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+  }
+  .glass-loader {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2),
+                inset 0 0 20px rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-loader::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(
+      to bottom right,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0),
+      rgba(255,255,255,0.3)
+    );
+    transform: rotate(0deg);
+    animation: rotate 2.5s linear infinite;
+  }
+  @keyframes rotate {
+    to { transform: rotate(360deg); }
+  }
+  .loader-text {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    letter-spacing: 1px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+
+  /* Адаптивность */
+  @media (max-width:768px){
+    header h1{font-size:1.8rem;}
+    main { padding: 1.5rem; gap: 1.5rem; }
+    .card { border-radius: 20px; }
+    .about {
+      margin: 1.5rem;
+      padding: 1.5rem;
+      font-size: 0.95rem;
+      border-radius: 20px;
+    }
+    .counter {
+      margin: 1.5rem auto;
+      font-size: 1rem;
+      padding: 0.8rem;
+    }
+  }
+  @media (max-width:480px){
+    header h1{font-size:1.6rem;}
+    main { grid-template-columns: 1fr; }
+    .info h2{font-size:1.15rem;}
+    .about {
+      margin: 1rem;
+      padding: 1.2rem;
+      line-height: 1.6;
+    }
+    .glass-loader {
+      width: 80px;
+      height: 80px;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Steam Freebies Hub</h1>
+</header>
+<div class="counter" id="counter">Найдено: 0 акций</div>
+<main id="games-container">
+  <div class="loader">
+    <div class="glass-loader"></div>
+    <div class="loader-text">Ищем лучшие раздачи...</div>
+  </div>
+</main>
+<section class="about">
+  <span>🎮</span> На нашем сайте вы всегда найдёте актуальные бесплатные раздачи игр в Steam.<br>
+  <span>🔄</span> Список обновляется автоматически каждые 5 минут, чтобы вы ничего не пропустили.<br>
+  <span>💎</span> Забирайте игры бесплатно и навсегда, пока раздача активна!
+</section>
+<footer>by Aik Carroll</footer>
+<script>
+  async function loadGiveaways(){
+    const container = document.getElementById('games-container');
+    const counter = document.getElementById('counter');
+    
+    try {
+      const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.gamerpower.com/api/giveaways?platform=steam');
+      const res = await fetch(url);
+      if(!res.ok) throw new Error(res.status);
+      const wrapped = await res.json();
+      const dataRaw = JSON.parse(wrapped.contents);
+
+      const data = dataRaw.filter(g => {
+        if (!g.platforms) return false;
+        return g.platforms.toLowerCase().includes('steam');
+      });
+
+      container.innerHTML = '';
+      counter.textContent = `Найдено: ${data.length} акций`;
+      
+      if(data.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column:1/-1; text-align:center; color:rgba(255,255,255,0.7);">
+            <p style="font-size:1.2rem;">Сейчас нет активных раздач</p>
+            <p>Попробуйте проверить позже</p>
+          </div>
+        `;
+        return;
+      }
+
+      data.forEach(g => {
+        const end = g.end_date && g.end_date !== 'N/A'
+          ? new Date(g.end_date).toLocaleDateString('ru')
+          : 'Без срока';
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${g.image}" alt="${g.title}" loading="lazy">
+          <div class="info">
+            <h2>${g.title}</h2>
+            <p>До: ${end}</p>
+            <a href="${g.open_giveaway_url}" target="_blank" rel="noopener noreferrer">Получить</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    } catch(e) {
+      container.innerHTML = `
+        <div style="grid-column:1/-1; text-align:center;">
+          <p style="color:#f87171; font-size:1.1rem;">Ошибка загрузки</p>
+          <p style="color:rgba(255,255,255,0.6); margin-top:0.5rem;">Попробуйте обновить страницу</p>
+        </div>
+      `;
+      counter.textContent = 'Ошибка загрузки';
+      console.error('Fetch error:', e);
+    }
+  }
+  loadGiveaways();
+  setInterval(loadGiveaways, 300000);
+</script>
+</body>
+</html>
