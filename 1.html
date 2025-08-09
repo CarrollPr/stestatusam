@@ -3,14 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Steam Freebies Hub | Dark AI Edition</title>
+<title>Steam Freebies</title>
 <style>
 :root {
-  --space-gradient: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
-  --neon-purple: #8a2be2;
-  --neon-blue: #00d4ff;
-  --neon-pink: #ff00aa;
-  --glass-dark: rgba(15, 15, 35, 0.7);
+  --bg-dark: #0d1117;
+  --card-bg: rgba(30, 35, 45, 0.7);
+  --accent: #1a73e8;
 }
 
 * {
@@ -20,500 +18,153 @@
 }
 
 body {
-  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
-  background: var(--space-gradient);
-  color: #e0e0e0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-dark);
+  color: #e8e8e8;
   min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* AI-фон с частицами */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 25%),
-    radial-gradient(circle at 80% 70%, rgba(0, 212, 255, 0.15) 0%, transparent 25%),
-    radial-gradient(circle at 50% 50%, rgba(255, 0, 170, 0.1) 0%, transparent 30%);
-  z-index: -2;
-  animation: pulseBackground 20s infinite alternate;
-}
-
-@keyframes pulseBackground {
-  0% { opacity: 0.7; }
-  50% { opacity: 1; }
-  100% { opacity: 0.7; }
-}
-
-/* Анимированные частицы */
-.particle {
-  position: fixed;
-  background: white;
-  border-radius: 50%;
-  filter: blur(1px);
-  z-index: -1;
-  animation: float linear infinite;
-}
-
-@keyframes float {
-  to { transform: translateY(-100vh) rotate(360deg); }
+  line-height: 1.5;
 }
 
 header, footer {
+  padding: 1.2rem;
   text-align: center;
-  padding: 1.5rem;
-  background: var(--glass-dark);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-}
-
-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(20, 25, 35, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 footer {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: none;
+  margin-top: 2rem;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: #6e7681;
 }
 
 h1 {
-  font-size: 2.5rem;
-  background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
-  letter-spacing: 1px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #fff;
 }
 
 .counter {
   max-width: 500px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background: var(--glass-dark);
-  border-radius: 16px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin: 1.5rem auto;
+  padding: 0.8rem;
+  background: var(--card-bg);
+  border-radius: 8px;
   text-align: center;
-  font-size: 1.2rem;
-  color: white;
-  font-weight: 600;
-  position: relative;
-  overflow: hidden;
-}
-
-.counter::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    transparent,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  transform: rotate(30deg);
-  animation: shine 6s infinite;
-}
-
-@keyframes shine {
-  0% { transform: translateX(-100%) rotate(30deg); }
-  100% { transform: translateX(100%) rotate(30deg); }
+  font-size: 1rem;
+  color: #c9d1d9;
 }
 
 main {
-  flex: 1;
-  padding: 2rem;
+  padding: 1.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-  z-index: 1;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
 .card {
-  background: var(--glass-dark);
-  border-radius: 16px;
+  background: var(--card-bg);
+  border-radius: 8px;
   overflow: hidden;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  position: relative;
+  transition: transform 0.2s;
 }
 
 .card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 40px rgba(138, 43, 226, 0.3);
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(255, 255, 255, 0.05),
-    transparent
-  );
-  pointer-events: none;
+  transform: translateY(-4px);
 }
 
 .card img {
   width: 100%;
-  height: 200px;
+  height: 160px;
   object-fit: cover;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .info {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  padding: 1.2rem;
 }
 
 .info h2 {
-  font-size: 1.3rem;
-  color: white;
-  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
 }
 
 .info p {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  color: #8b949e;
+  margin-bottom: 1rem;
 }
 
 .info a {
-  display: inline-block;
-  padding: 0.8rem 1.2rem;
-  background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
+  display: block;
+  padding: 0.6rem;
+  background: var(--accent);
   color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
   text-align: center;
-  margin-top: 1rem;
-  transition: all 0.3s;
-  box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
-  position: relative;
-  overflow: hidden;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background 0.2s;
 }
 
 .info a:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(138, 43, 226, 0.6);
-}
-
-.info a::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: 0.5s;
-}
-
-.info a:hover::before {
-  left: 100%;
+  background: #185abc;
 }
 
 .loader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 3rem;
   grid-column: 1 / -1;
-}
-
-.ai-loader {
-  width: 80px;
-  height: 80px;
-  position: relative;
-}
-
-.ai-loader::before,
-.ai-loader::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  border-top-color: var(--neon-blue);
-  animation: spin 1.5s linear infinite;
-}
-
-.ai-loader::after {
-  border-top-color: var(--neon-purple);
-  animation-delay: 0.5s;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.loader-text {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
   text-align: center;
-  position: relative;
-}
-
-.loader-text::after {
-  content: '...';
-  position: absolute;
-  animation: dots 1.5s infinite steps(3, end);
-}
-
-@keyframes dots {
-  0%, 20% { content: '.'; }
-  40% { content: '..'; }
-  60%, 100% { content: '...'; }
-}
-
-.about {
-  max-width: 800px;
-  margin: 3rem auto;
   padding: 2rem;
-  background: var(--glass-dark);
-  border-radius: 16px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  line-height: 1.7;
 }
 
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+.ar-view {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
 }
 
-.feature {
-  background: rgba(30, 30, 60, 0.5);
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s;
-}
-
-.feature:hover {
-  transform: translateY(-5px);
-  background: rgba(40, 40, 80, 0.7);
-}
-
-.feature-icon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--neon-blue);
+.ar-view svg {
+  width: 24px;
+  height: 24px;
+  fill: white;
 }
 
 @media (max-width: 768px) {
   main {
     grid-template-columns: 1fr;
-    padding: 1.5rem;
   }
-  
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .about {
-    margin: 1.5rem;
-    padding: 1.5rem;
-  }
-}
-
-/* Дополнительные крутые фичи */
-.notification-bell {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(138, 43, 226, 0.5);
-  z-index: 100;
-  transition: all 0.3s;
-}
-
-.notification-bell:hover {
-  transform: scale(1.1) rotate(15deg);
-  box-shadow: 0 6px 25px rgba(138, 43, 226, 0.7);
-}
-
-.theme-toggle {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  background: var(--glass-dark);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50px;
-  padding: 0.5rem;
-  display: flex;
-  backdrop-filter: blur(10px);
-  z-index: 100;
-}
-
-.theme-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.theme-btn.active {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.theme-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
 }
 </style>
 </head>
 <body>
-<!-- Анимированные частицы -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Создаем частицы для фона
-    for (let i = 0; i < 50; i++) {
-      createParticle();
-    }
-  });
-
-  function createParticle() {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    
-    // Случайные параметры
-    const size = Math.random() * 5 + 1;
-    const posX = Math.random() * window.innerWidth;
-    const posY = Math.random() * window.innerHeight + window.innerHeight;
-    const opacity = Math.random() * 0.5 + 0.1;
-    const duration = Math.random() * 30 + 20;
-    
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    particle.style.left = `${posX}px`;
-    particle.style.top = `${posY}px`;
-    particle.style.opacity = opacity;
-    particle.style.animationDuration = `${duration}s`;
-    
-    // Случайный цвет (нежно-голубой или фиолетовый)
-    const colors = ['rgba(138, 43, 226, 0.7)', 'rgba(0, 212, 255, 0.7)'];
-    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-    
-    document.body.appendChild(particle);
-    
-    // Удаляем частицу после анимации
-    setTimeout(() => {
-      particle.remove();
-      createParticle(); // Создаем новую частицу
-    }, duration * 1000);
-  }
-</script>
-
 <header>
-  <h1>Steam Freebies Hub</h1>
+  <h1>Steam Freebies</h1>
 </header>
 
-<div class="counter" id="counter">Сканируем вселенную Steam...</div>
+<div class="counter" id="counter">Загрузка данных...</div>
 
 <main id="games-container">
-  <div class="loader">
-    <div class="ai-loader"></div>
-    <div class="loader-text">Загружаем космические раздачи</div>
-  </div>
+  <div class="loader">Загрузка...</div>
 </main>
 
-<section class="about">
-  <h2 style="margin-bottom: 1.5rem; color: var(--neon-blue);">Космическая коллекция игр</h2>
-  <p>Мы сканируем вселенную Steam, чтобы найти для тебя самые горячие бесплатные раздачи. Наш алгоритм работает 24/7, чтобы ты не пропустил ни одного космического сокровища!</p>
-  
-  <div class="features">
-    <div class="feature">
-      <div class="feature-icon">🚀</div>
-      <h3>Мгновенные уведомления</h3>
-      <p>Получай оповещения о новых раздачах первым</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🔍</div>
-      <h3>Умный поиск</h3>
-      <p>ИИ анализирует качество каждой раздачи</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">💎</div>
-      <h3>Эксклюзивные находки</h3>
-      <p>То, что другие сайты не заметят</p>
-    </div>
-  </div>
-</section>
+<footer>by Aik Carroll</footer>
 
-<footer>
-  <p>© 2023 Steam Freebies Hub | Dark AI Edition</p>
-  <p>by Aik Carroll with ❤️ and neural networks</p>
-</footer>
-
-<!-- Кнопка уведомлений -->
-<div class="notification-bell" title="Включить уведомления">
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+<div class="ar-view" id="arButton" title="AR-просмотр">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z"/>
   </svg>
-</div>
-
-<!-- Переключатель тем -->
-<div class="theme-toggle">
-  <button class="theme-btn active" title="Темная тема">🌑</button>
-  <button class="theme-btn" title="Светлая тема">☀️</button>
 </div>
 
 <script>
@@ -532,15 +183,10 @@ async function loadGiveaways() {
     const data = dataRaw.filter(g => g.platforms?.toLowerCase().includes('steam'));
     
     container.innerHTML = '';
-    counter.textContent = `Найдено ${data.length} космических раздач`;
+    counter.textContent = `Найдено: ${data.length}`;
     
     if (data.length === 0) {
-      container.innerHTML = `
-        <div style="grid-column:1/-1; text-align:center; padding:3rem;">
-          <h3 style="color:var(--neon-blue); margin-bottom:1rem;">Чёрная дыра...</h3>
-          <p>Сейчас нет активных раздач. Проверь позже, когда вселенная будет щедрее!</p>
-        </div>
-      `;
+      container.innerHTML = '<div class="loader">Нет активных раздач</div>';
       return;
     }
     
@@ -555,76 +201,70 @@ async function loadGiveaways() {
         <img src="${g.image}" alt="${g.title}" loading="lazy">
         <div class="info">
           <h2>${g.title}</h2>
-          <p>⏳ До: ${end}</p>
-          <p>⭐ ${g.worth || 'Бесплатно!'}</p>
-          <a href="${g.open_giveaway_url}" target="_blank">Забрать в космос</a>
+          <p>До: ${end}</p>
+          <a href="${g.open_giveaway_url}" target="_blank">Получить</a>
         </div>
       `;
       container.appendChild(card);
     });
-    
-    // Анимация появления карточек
-    const cards = document.querySelectorAll('.card');
-    cards.forEach((card, i) => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(20px)';
-      card.style.transition = 'all 0.5s ease';
-      
-      setTimeout(() => {
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-      }, 100 * i);
-    });
-    
   } catch (e) {
-    console.error('Ошибка:', e);
-    container.innerHTML = `
-      <div style="grid-column:1/-1; text-align:center; padding:3rem;">
-        <h3 style="color:#ff4d4d; margin-bottom:1rem;">Критическая ошибка гипердвигателя</h3>
-        <p>Не удалось подключиться к серверу Steam. Попробуй перезагрузить страницу.</p>
-      </div>
-    `;
-    counter.textContent = 'Ошибка подключения';
+    container.innerHTML = '<div class="loader">Ошибка загрузки</div>';
+    counter.textContent = 'Ошибка';
   }
 }
 
-// Первая загрузка
-loadGiveaways();
-
-// Автообновление каждые 5 минут
-setInterval(loadGiveaways, 300000);
-
-// Кнопка уведомлений
-document.querySelector('.notification-bell').addEventListener('click', () => {
-  if (Notification.permission === 'granted') {
-    new Notification('Steam Freebies Hub', {
-      body: 'Ты будешь получать уведомления о новых раздачах!',
-      icon: 'https://store.akamai.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016'
+document.getElementById('arButton').addEventListener('click', () => {
+  const model = {
+    src: 'https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb',
+    iosSrc: 'https://modelviewer.dev/shared-assets/models/NeilArmstrong.usdz',
+    alt: '3D модель игры',
+    ar: true,
+    arModes: 'scene-viewer quick-look',
+    environmentImage: 'neutral',
+    autoRotate: true,
+    cameraControls: true
+  };
+  
+  if (navigator.xr && navigator.xr.isSessionSupported) {
+    const scene = document.createElement('div');
+    scene.style.position = 'fixed';
+    scene.style.top = '0';
+    scene.style.left = '0';
+    scene.style.width = '100vw';
+    scene.style.height = '100vh';
+    scene.style.background = 'rgba(0,0,0,0.9)';
+    scene.style.zIndex = '1000';
+    scene.innerHTML = `
+      <model-viewer
+        src="${model.src}"
+        ios-src="${model.iosSrc}"
+        alt="${model.alt}"
+        ar
+        ar-modes="${model.arModes}"
+        environment-image="${model.environmentImage}"
+        auto-rotate
+        camera-controls
+        style="width:100%;height:100%;">
+      </model-viewer>
+      <button style="position:absolute;top:20px;right:20px;padding:8px 12px;background:#f00;color:#fff;border:none;border-radius:4px;cursor:pointer;">Закрыть</button>
+    `;
+    
+    document.body.appendChild(scene);
+    scene.querySelector('button').addEventListener('click', () => {
+      document.body.removeChild(scene);
     });
-  } else if (Notification.permission !== 'denied') {
-    Notification.requestPermission().then(permission => {
-      if (permission === 'granted') {
-        new Notification('Уведомления включены!');
-      }
-    });
+  } else {
+    alert('AR не поддерживается вашим устройством');
   }
 });
 
-// Переключатель тем (можно доработать)
-document.querySelectorAll('.theme-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    if (btn.textContent === '☀️') {
-      document.body.style.setProperty('--glass-dark', 'rgba(255, 255, 255, 0.2)');
-      document.body.style.background = 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)';
-    } else {
-      document.body.style.setProperty('--glass-dark', 'rgba(15, 15, 35, 0.7)');
-      document.body.style.background = 'linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%)';
-    }
-  });
-});
+loadGiveaways();
+setInterval(loadGiveaways, 300000);
+
+const modelViewerScript = document.createElement('script');
+modelViewerScript.src = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
+modelViewerScript.type = 'module';
+document.head.appendChild(modelViewerScript);
 </script>
 </body>
 </html>
